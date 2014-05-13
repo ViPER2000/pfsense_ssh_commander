@@ -8,8 +8,6 @@ class SSHClient(object):
     """
     def __init__(self, host, port, username, password, key=None,
                  passphrase=None):
-        self.__username = username
-        self.__password = password
         self.__client = paramiko.SSHClient()
         self.__client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         if key is not None:
