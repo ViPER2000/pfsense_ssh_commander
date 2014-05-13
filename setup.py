@@ -4,7 +4,7 @@ from setuptools import setup
 setup (
     name = 'pfsense_ssh',
     version = '0.0.1',
-    description = 'A simple SSH client, including utilities for manipulating pfSense.',
+    description = 'A simple SSH client and utilities for manipulating pfSense.',
     author = 'Travis Cunningham',
     author_email = 'travcunn@umail.iu.edu',
     packages = ['pfsense_ssh'],
