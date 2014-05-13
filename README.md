@@ -1,8 +1,7 @@
 pfSense SSH Commander
 ===========
-A simple SSH Client, including utilities for manipulating pfSense.
-Although Fabric could do this job, this small library gives more control
-over SSH.
+A simple SSH Client with utilities for manipulating pfSense.
+Built on top of Paramiko, like Fabric and others.
 
 
 Installation
