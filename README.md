@@ -41,7 +41,7 @@ with SSHClient('127.0.0.1', 22, 'username', 'pass') as s:
 ```
 
 
-Or explicitly close the connection:
+Explicitly close the connection when using SSHClient:
 
 ```python
 from pfsense_ssh import SSHClient
