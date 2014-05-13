@@ -1,4 +1,4 @@
-pfSense SSH
+pfSense SSH Commander
 ===========
 A simple SSH Client, including utilities for manipulating pfSense.
 Although Fabric could do this job, this small library gives more control
