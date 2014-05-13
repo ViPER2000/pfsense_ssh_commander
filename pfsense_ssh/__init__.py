@@ -3,6 +3,9 @@ import paramiko
 
 
 class SSHClient(object):
+    """
+    Basic SSH client.
+    """
     def __init__(self, host, port, username, password, key=None,
                  passphrase=None):
         self.__username = username
@@ -16,15 +19,26 @@ class SSHClient(object):
                               password=password, pkey=key, timeout=30)
 
     def close(self):
+        """
+        Closes the SSH connection.
+        """
         if self.__client is not None:
             self.__client.close()
             self.__client = None
 
     def execute(self, command):
+        """
+        Runs a command on the remote machine.
+
+        Returns a tuple: (stdin, stdout, stderr)
+        """
         return self.__client.exec_command(command)
 
     @property
     def sftp(self):
+        """
+        Returns paramiko.SFTPClient based upon the created SSH connection.
+        """
         return self.__client.open_sftp()
 
     def __enter__(self, *args):
@@ -36,11 +50,20 @@ class SSHClient(object):
 
 
 class Pfsense(object):
+    """
+    Contains commands for manipulating a pfSense box.
+    """
     def __init__(self, ssh_client):
         self.__ssh = ssh_client
 
     def reboot(self):
+        """
+        Reboots the machine.
+        """
         return self.__ssh.execute('/etc/rc.reboot')
 
     def reload_config(self):
+        """
+        Reloads the configuration files.
+        """
         return self.__ssh.execute('/etc/rc.reload_all')

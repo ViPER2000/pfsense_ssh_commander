@@ -1,12 +1,14 @@
 pfSense SSH
 ===========
 A simple SSH Client, including utilities for manipulating pfSense.
+Although Fabric could do this job, this small library gives more control
+over SSH.
 
 
 Installation
 ------------
 
-    pip install -r requirements.txt
+    python setup.py install
 
 
 
@@ -21,7 +23,7 @@ Usage
 
     from pfsense_ssh import Pfsense, SSHClient
 
-    ssh = SSHClient('192.168.11.40', 22, 'root', 'pfsense')
+    ssh = SSHClient('127.0.0.1', 22, 'username', 'pass')
     pfsense = Pfsense(ssh)
 
     stdin, stdout, stderr = pfsense.reboot()

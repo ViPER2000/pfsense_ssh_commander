@@ -2,8 +2,8 @@ import unittest
 
 from pfsense_ssh import Pfsense, SSHClient
 
-# SSH server of pfSense
-HOST = '192.168.11.40'
+# pfSense SSH server
+HOST = '127.0.0.1'
 USER = 'root'
 PASS = 'pfsense'
 
