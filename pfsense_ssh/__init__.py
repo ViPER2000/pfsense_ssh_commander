@@ -1,10 +1,8 @@
-#!/usr/bin/python
-
 from StringIO import StringIO
 import paramiko 
 
 
-class SSHClient:
+class SSHClient(object):
     def __init__(self, host, port, username, password, key=None,
                  passphrase=None):
         self.__username = username
@@ -22,13 +20,27 @@ class SSHClient:
             self.__client.close()
             self.__client = None
 
-    def execute(self, command, sudo=False):
-        if sudo:
-            command = "sudo %s" % (command)
+    def execute(self, command):
         return self.__client.exec_command(command)
+
+    @property
+    def sftp(self):
+        return self.__client.open_sftp()
 
     def __enter__(self, *args):
         return self
 
     def __exit__(self, type, value, traceback):
+        self.sftp.close()
         self.close()
+
+
+class Pfsense(object):
+    def __init__(self, ssh_client):
+        self.__ssh = ssh_client
+
+    def reboot(self):
+        return self.__ssh.execute('/etc/rc.reboot')
+
+    def reload_config(self):
+        return self.__ssh.execute('/etc/rc.reload_all')

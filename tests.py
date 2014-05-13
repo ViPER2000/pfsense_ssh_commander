@@ -1,6 +1,11 @@
 import unittest
 
-from pyssh import SSHClient
+from pfsense_ssh import Pfsense, SSHClient
+
+# SSH server of pfSense
+HOST = '192.168.11.40'
+USER = 'root'
+PASS = 'pfsense'
 
 
 class TestCommand(unittest.TestCase):
@@ -11,17 +16,25 @@ class TestCommand(unittest.TestCase):
                     u'media\n', u'mnt\n', u'proc\n', u'rescue\n', u'root\n',
                     u'sbin\n', u'scripts\n', u'tank\n', u'tmp\n', u'usr\n',
                     u'var\n']
-        with SSHClient('192.168.11.40', 22, 'travis', 'llamas123') as s:
+        with SSHClient(HOST, 22, USER, PASS) as s:
             stdin, stdout, stderr = s.execute('ls /')
             results = stdout.readlines()
             for item in expected:
                 self.assertTrue(item in results)
 
+
+class TestSftp(unittest.TestCase):
+    def test_download_file(self):
+        with SSHClient(HOST, 22, USER, PASS) as s:
+            s.sftp.get("/conf/config.xml", '/tmp/config.xml')
+
+
+class TestPfsenseCommands(unittest.TestCase):
     def test_reboot(self):
-        with SSHClient('192.168.11.40', 22, 'travis', 'llamas123') as s:
-            stdin, stdout, stderr = s.execute('/etc/rc.reboot', sudo=True)
-            print stdout.readlines()
-            print stderr.readlines()
+        ssh = SSHClient(HOST, 22, USER, PASS)
+        pfsense = Pfsense(ssh)
+        pfsense.reboot()
+        ssh.close()
 
 
 if __name__ == '__main__':
