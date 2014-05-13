@@ -19,7 +19,7 @@ class TestCommand(unittest.TestCase):
 
     def test_reboot(self):
         with SSHClient('192.168.11.40', 22, 'travis', 'llamas123') as s:
-            stdin, stdout, stderr = s.execute('sudo /etc/rc.reboot')
+            stdin, stdout, stderr = s.execute('/etc/rc.reboot', sudo=True)
             print stdout.readlines()
             print stderr.readlines()
 

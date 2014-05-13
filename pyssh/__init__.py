@@ -23,6 +23,8 @@ class SSHClient:
             self.__client = None
 
     def execute(self, command, sudo=False):
+        if sudo:
+            command = "sudo %s" % (command)
         return self.__client.exec_command(command)
 
     def __enter__(self, *args):
